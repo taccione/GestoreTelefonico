@@ -1,59 +1,92 @@
-import static tools.utility.*;
-
 import java.util.Scanner;
+
+import static Tools.Utility.*;
+
 public class Main {
     public static void main(String[] args) {
-        String[] operazioni = {"VODAFONE", "[1] Inserimento",
-                "[2] Visualizzazione",
-                "[3] Ricerca",
-                "[4] Fine"};
-
-        final int nMax=3;
-        Contatto[] gestore = new Contatto[nMax];
-        int contrattiVenduti = 0;
-        boolean siTel=true;
-
-        Scanner keyboard = new Scanner(System.in);
-
-        boolean fine=true;
+        int contacontatti = 0;
+        final int nContratti = 3;
+        boolean uscita = false;
+        Scanner tastiera = new Scanner(System.in);
+        Persona[] gestore = new Persona[nContratti];
+        String[] opzioni = {"***CENTRO ACCOGGLIENZA VODAFONZ***", "1-Inserimento", "2-Visualizza", "3-Fine"};
         do {
-            switch(menu(operazioni, keyboard)) {
-                case 1->{
-                    if(contrattiVenduti<nMax){
-                        gestore[contrattiVenduti] = leggiPersona(siTel, keyboard);
 
+            switch (menu(opzioni, tastiera)) {
+                case 1:
+                    if (contacontatti < nContratti) {
+                        Persona nuovoContatto = LeggiContatto(tastiera);
+                        if (trovaContatto(gestore, nuovoContatto, contacontatti) == -1) {
+                            gestore[contacontatti] = nuovoContatto;
+                            contacontatti++;
+                        } else {
+                            System.out.println("Il contatto è già presente nella collezione.");
+                        }
+                    } else {
+                        System.out.println("Non ci sono più contratti da vendere");
                     }
-                }
-                case 2->{}
-                case 3->{}
-                default-> fine=false;
+                    ;
+                    break;
+                case 2:
+                    if (contacontatti > 0) {
+                        Visualizza(gestore, contacontatti);
+                    } else {
+                        System.out.println("Non ci sono contatti da visualizzare");
+                    }
+                    ;
+                    break;
+                case 3:
+                    uscita = true;
+                    ;
+                    break;
+
             }
-        }while(fine);
+
+        } while (!uscita);
+        System.out.println("Fine programma");
     }
-    private static Contatto leggiPersona(boolean siTel, Scanner keyboard){
-        String[] tipoC = {"Telefono", "1]abitazione", "2]cellulare", "3]aziendale"};
-        Contatto persona = new Contatto();
-        System.out.println("\nInserisci il nome:");
-        persona.nome=keyboard.nextLine();
-        System.out.println("\nInserisci il cognome:");
-        persona.cognome=keyboard.nextLine();
-        System.out.println("\nInserisci il numero di telefono");
-        if(siTel){
-            persona.telefono=keyboard.nextLine();
-            switch(menu(tipoC, keyboard)){
-                case 1 -> persona.tipo = tipoContratto.abitazione;
 
-                case 2 -> persona.tipo = tipoContratto.cellulare;
-
-                default -> persona.tipo = tipoContratto.aziendale;
-
-
+    public static Persona LeggiContatto(Scanner tastiera) {
+        Persona contatto = new Persona();
+        System.out.println("Inserici il nome");
+        contatto.nome = tastiera.nextLine();
+        System.out.println("Inserici il cognome");
+        contatto.cognome = tastiera.nextLine();
+        System.out.println("Inserici il numero di telefono");
+        contatto.numDiTelefono = tastiera.nextLine();
+        String[] opzioni = {"TipoAbbonamento", "1-cellulare", "2-abitazione", "3-azienda"};
+        int scelta;
+        do {
+            scelta = menu(opzioni, tastiera);
+            switch (scelta) {
+                case 1:
+                    contatto.tipo = Tipologia.cellulare;
+                    break;
+                case 2:
+                    contatto.tipo = Tipologia.abitazione;
+                    break;
+                case 3:
+                    contatto.tipo = Tipologia.azienda;
+                    break;
             }
 
+        } while (scelta > 3 || scelta < 1);
+
+        return contatto;
+    }
+
+    public static int trovaContatto(Persona[] gestore, Persona nuovoContatto, int contacontatti) {
+        for (int i = 0; i < contacontatti; i++) {
+            if (gestore[i].cognome.equalsIgnoreCase(nuovoContatto.cognome) && gestore[i].nome.equalsIgnoreCase(nuovoContatto.nome)) {
+                return i; // Restituisce l'indice del contatto se trovato
+            }
         }
-        return persona;
+        return -1; // Restituisce -1 se il contatto non è stato trovato
     }
-    private static void visualizza(String[] gestore, int contrattiVenduti){
 
+    public static void Visualizza(Persona gestore[], int contacontatti) {
+        for (int i = 0; i < contacontatti; i++) {
+            System.out.println(gestore[i].anagrafica());
+        }
     }
 }
