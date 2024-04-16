@@ -189,7 +189,7 @@ public class Main {
         return gestore;
     }
 
-    private static boolean ricerca(Contatto[] gestore, Contatto contatto, int contrattiVenduti) {
+    private static boolean Ricerca(Contatto[] gestore, Contatto contatto, int contrattiVenduti) {
         //Controllo se il nome e il cognome del contatto e ugale al nome e cogome del gestore
         boolean ricerca = false;
 
@@ -201,7 +201,7 @@ public class Main {
         return ricerca;
     }
 
-    private static void visualizza(Contatto[] gestore, int contrattiVenduti) {
+    private static void Visualizza(Contatto[] gestore, int contrattiVenduti) {
         for (int i = 0; i < contrattiVenduti; i++) {
             System.out.println(gestore[i].stampa());
         }
