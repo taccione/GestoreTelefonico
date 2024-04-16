@@ -13,7 +13,7 @@ public class Main {
                 "[6] Eliminazione del contatto tramite nome e cognome",
                 "[7] Eliminazione del contatto tramite numero",
                 "[8] Fine"};
-        boolean Sitel = true;
+        boolean SiTel = true;
         String[] tipoC = {"Telefono", "1]abitazione", "2]cellulare", "3]aziendale"};
         int posizione = 0;
         final int nMax = 3;
@@ -30,7 +30,7 @@ public class Main {
 
                     if (contrattiVenduti < nMax) {
                         //firma contratto
-                        gestore[contrattiVenduti] = leggiPersona(Sitel, keyboard);
+                        gestore[contrattiVenduti] = LeggiPersona(SiTel, keyboard);
                         while (ControlloNumero(gestore, gestore[contrattiVenduti], contrattiVenduti)) {
                             System.out.println("Reinseisci il numero perchè già presente");
                             gestore[contrattiVenduti].telefono = keyboard.nextLine();
@@ -38,7 +38,8 @@ public class Main {
                         //entra solo se il nome e il cognome non sono presenti
                         if (!Ricerca(gestore, gestore[contrattiVenduti], contrattiVenduti)) {
                             contrattiVenduti++;
-                        }//se il nome e il cognome sono già stati inseriti annulla l'inserimento
+                        }
+                        //se il nome e il cognome sono già stati inseriti annulla l'inserimento
                         else {
                             System.out.println("Il nome utente è già presente");
                             gestore[contrattiVenduti] = null;
@@ -56,7 +57,7 @@ public class Main {
                     if (contrattiVenduti != 0) {
                         //Ci sono contratti venduti
                         //lettura, ricerca, visualizzazione
-                        posizione = Posizione(gestore, leggiPersona(false, keyboard), contrattiVenduti);
+                        posizione = Posizione(gestore, LeggiPersona(false, keyboard), contrattiVenduti);
                         if (posizione != -1) {
                             System.out.println(gestore[posizione].stampa());
                         } else {
@@ -68,7 +69,7 @@ public class Main {
                     break;
                 }
                 case 4: {
-                    posizione = Posizione(gestore, leggiPersona(false, keyboard), contrattiVenduti);
+                    posizione = Posizione(gestore, LeggiPersona(false, keyboard), contrattiVenduti);
                     if (posizione != -1) {
                         System.out.println("Inserisci il numero");
                         gestore[posizione].telefono = keyboard.nextLine();
@@ -81,7 +82,7 @@ public class Main {
                     break;
                 }
                 case 5: {
-                    posizione = Posizione(gestore, leggiPersona(false, keyboard), contrattiVenduti);
+                    posizione = Posizione(gestore, LeggiPersona(false, keyboard), contrattiVenduti);
                     if (posizione != -1) {
                         switch (menu(tipoC, keyboard)) {
                             case 1 -> gestore[posizione].tipo = tipoContratto.abitazione;
@@ -95,7 +96,7 @@ public class Main {
                 }
 
                 case 6: {
-                    posizione = Posizione(gestore, leggiPersona(false, keyboard), contrattiVenduti);
+                    posizione = Posizione(gestore, LeggiPersona(false, keyboard), contrattiVenduti);
                     if (posizione != -1) {
                         gestore = PosizioneEliminata(gestore, contrattiVenduti, posizione);
                         gestore[contrattiVenduti - 1] = null;
@@ -127,21 +128,21 @@ public class Main {
         } while (fine);
     }
 
-    private static Contatto leggiPersona(boolean Sitel, Scanner keyboard) {
+    private static Contatto LeggiPersona(boolean Sitel, Scanner tastiera) {
         //Sitel è true quando dobbiamo leggere
         String[] tipoC = {"Telefono", "1]abitazione", "2]cellulare", "3]aziendale"};
         //Istanziato un oggetto di tipo contatto:
         Contatto persona = new Contatto();
         System.out.println("Inserisci il nome: ");
-        persona.nome = keyboard.nextLine();
+        persona.nome = tastiera.nextLine();
         System.out.println("\nInserisci il cognome: ");
-        persona.cognome = keyboard.nextLine();
+        persona.cognome = tastiera.nextLine();
         if (Sitel) {
             System.out.println("\nInserisci il numero di telefono: ");
-            persona.telefono = keyboard.nextLine();  //Vado a leggere il numero di telefono
+            persona.telefono = tastiera.nextLine();  //Vado a leggere il numero di telefono
 
             //I valori assegnati all'attributo sono compresi nel range
-            switch (menu(tipoC, keyboard)) {
+            switch (menu(tipoC, tastiera)) {
                 case 1 -> persona.tipo = tipoContratto.abitazione;
                 case 2 -> persona.tipo = tipoContratto.cellulare;
                 default -> persona.tipo = tipoContratto.aziendale;
