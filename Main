@@ -36,7 +36,7 @@ public class Main {
                             gestore[contrattiVenduti].telefono = keyboard.nextLine();
                         }
                         //entra solo se il nome e il cognome non sono presenti
-                        if (!ricerca(gestore, gestore[contrattiVenduti], contrattiVenduti)) {
+                        if (!Ricerca(gestore, gestore[contrattiVenduti], contrattiVenduti)) {
                             contrattiVenduti++;
                         }//se il nome e il cognome sono già stati inseriti annulla l'inserimento
                         else {
@@ -48,7 +48,7 @@ public class Main {
                     }
                     break;
                 case 2: {
-                    visualizza(gestore, contrattiVenduti);
+                    Visualizza(gestore, contrattiVenduti);
                     break;
                 }
 
