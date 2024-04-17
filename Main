@@ -162,7 +162,6 @@ public class Main {
     }
 
     private static int Posizione(Contatto[] gestore, Contatto contatto, int contrattiVenduti) {
-
         for (int i = 0; i < contrattiVenduti; i++) {
             if (contatto.nome.equals(gestore[i].nome) && contatto.cognome.equals(gestore[i].cognome)) {
                 return i;
